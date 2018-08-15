@@ -4,6 +4,9 @@
 
 import random
 
+team_random = 0
+stage_random = 0
+
 def readFileTOList(path):
 	list = []
 	f = open(path,'r')
@@ -21,7 +24,6 @@ rule_file = "./rule_list.txt"
 rule_list = readFileTOList(rule_file)
 print(random.choice(rule_list))
 
-stage_random = 0
 if stage_random != 0 :
 	stage_file = "./stage_list.txt"
 	stage_list = readFileTOList(stage_file)
@@ -70,12 +72,7 @@ wepon_type_list = wepon_type_list + shelter_list
 
 wepon_free = "好きな武器を使うのです(=ω=)b"
 wepon_type_list.append(wepon_free)
-wepon_bold = "ボールドマーカーを使うのです(=ω=)b"
-wepon_type_list.append(wepon_bold)
-wepon_bold_neo = "ボールドマーカーネオを使うのです(=ω=)b"
-wepon_type_list.append(wepon_bold_neo)
 
-team_random = 0
 
 count = 1
 alpha_list = []
