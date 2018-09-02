@@ -143,6 +143,14 @@ wepon_type_list = wepon_type_list + shelter_list
 wepon_free = ["好きな武器を使うのです","Free"]
 wepon_type_list.append(wepon_free)
 
+akane_happy_file = "./happy.txt"
+akane_happy_list = readFileToList(akane_happy_file)
+
+akane_normal_file = "./normal.txt"
+akane_normal_list = readFileToList(akane_normal_file)
+
+akane_bad_file = "./bad.txt"
+akane_bad_list = readFileToList(akane_bad_file)
 
 if debug_mode :
     member_file = "./member_list.txt"
@@ -167,9 +175,9 @@ async def on_message(message):
         reply = 'これはテストやから無視したってな'
         await client.send_message(message.channel, reply)
     if message.content.startswith('/茜ちゃん') or message.content.startswith('一番いいのを頼む') or message.content.startswith('/buki'):
-        general = client.get_channel(config[channel_id][general])
-        alpha = client.get_channel(config[channel_id][baitomin])
-        bravo = client.get_channel(config[channel_id][fesmin])
+        general = client.get_channel(config['channel_id']['general'])
+        alpha = client.get_channel(config['channel_id']['baitomin'])
+        bravo = client.get_channel(config['channel_id']['fesmin'])
     
         member_list = []
         for member in general.voice_members :
@@ -178,12 +186,35 @@ async def on_message(message):
             member_list.append(member.name)
         for member in bravo.voice_members :
             member_list.append(member.name)
-    
-        text = run_randomizer(member_list)
-        reply = text
-        await client.send_message(message.channel, reply)
+
+        if len(member_list) > 0 :
+            text = run_randomizer(member_list)
+        else :
+            text = "今誰もおらんやないの。"
+        await client.send_message(message.channel, text)
+
+    if message.content.startswith('茜ちゃん勝ったで') or message.content.startswith('/win') or message.content.startswith('自分がんばった') :
+        user = message.author.name
+        reply_list = []
+        reply_list.extend(akane_happy_list)
+        reply_list.extend(akane_normal_list)
+        akane_text = user + " " + random.choice(reply_list)
+        await client.send_message(message.channel, akane_text)
+
+    if message.content.startswith('茜ちゃん負けたわ') or message.content.startswith('/lose') :
+        user = message.author.name
+        reply_list = []
+        reply_list.extend(akane_bad_list)
+        reply_list.extend(akane_normal_list)
+        akane_text = user + " " + random.choice(reply_list)
+        await client.send_message(message.channel, akane_text)
+
+    if message.content.startswith('茜ちゃんおやすみ'): 
+        user = message.author.name
+        akane_text = user + " " + "おやすみ。ええ夢見るんやで。"
+        await client.send_message(message.channel, akane_text)
 
 # botの接続と起動
 # （tokenにはbotアカウントのアクセストークンを入れてください）
-client.run(config[access_token][token])
+client.run(config['access_token']['token'])
 
