@@ -15,7 +15,7 @@ wepon_random_num = [1,2]
 
 config = ConfigParser()
 config.read('./randomizer.ini')
- 
+
 def readFileToList(path):
 	list = []
 	f = open(path,'r')
@@ -168,6 +168,17 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
+    text = "おいっす!あけましておめでとう。今年もよろしく。"
+    server = client.get_server("421886050978365450")
+# general text chanel
+#text_channel = server.get_channel("421886050978365453")
+# akane_chan text chanel
+    text_channel = server.get_channel("518472075791564811")
+#general = client.get_channel(config['channel_id']['general'])
+#hard_coded_channel = discord.Object(id=config['channel_id']['general'])
+#yield from client.send_message(hard_coded_channel, text)
+#await client.send_message(text_channel, text)
+    await client.send_message(text_channel, text)
 
 @client.event
 async def on_message(message):
@@ -213,6 +224,10 @@ async def on_message(message):
         user = message.author.name
         akane_text = user + " " + "おやすみ。ええ夢見るんやで。"
         await client.send_message(message.channel, akane_text)
+
+    if message.content.startswith('茜ちゃんかわいい') or message.content.startswith('茜ちゃんpretty'): 
+        text = "せやろ？"
+        await client.send_message(message.channel, text)
 
 # botの接続と起動
 # （tokenにはbotアカウントのアクセストークンを入れてください）
